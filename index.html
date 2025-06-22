@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdelmounim Zahri | مصمم جرافيك</title>
+    <link rel="icon" type="image/png" href="imageds/ChatGPT.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.0/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-primary: #1e8a3a; /* Darker green */
+            --green-secondary: #3bbf62; /* Lighter green */
+            --dark-background-start: #0a1a1a; /* Very dark green-ish */
+            --dark-background-end: #1a2e2e; /* Slightly lighter dark green-ish */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0px;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-background-start), var(--dark-background-end));
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .animate-glow {
+            animation: glow 3s infinite ease-in-out;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.08); /* Slightly less opaque for dark theme */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Lighter border for contrast */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-scrolled {
+            padding: 0.5rem 0;
+            background: rgba(10, 26, 26, 0.9); /* Dark green navbar when scrolled */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            margin-left: 20px;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--green-secondary); /* Green accent for hover */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: rgba(10, 26, 26, 0.97); /* Dark green overlay */
+            overflow: hidden;
+            transition: height 0.5s ease;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .menu-overlay.active {
+            height: 100vh;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .hamburger-line {
+            width: 24px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Darker shadow for dark theme */
+        }
+        
+        .service-icon {
+            transition: all 0.5s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--green-primary), var(--green-secondary));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+        }
+        
+        .btn-primary:hover:before {
+            left: 100%;
+        }
+        
+        .hero-gradient {
+            background:radial-gradient(circle at top right, #004d2e, transparent 70%), radial-gradient(circle at bottom left, #0d3838, transparent 70%); /* Greenish gradient */
+        }
+        
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .animated-bg:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, transparent 30%, rgba(59, 130, 246, 0.05) 70%), /* Reduce opacity of blue */
+                                     radial-gradient(circle at center, transparent 30%, rgba(30, 150, 90, 0.05) 70%); /* Green orb effect */
+            animation: rotate 25s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        .colors {
+            color: #1a5e3e; /* Darker green for main title */
+        }
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .mobile-nav-link {
+                margin: 15px 0;
+                font-size: 1.5rem;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+            }
+            
+            .menu-overlay.active .mobile-nav-link {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .menu-overlay.active .mobile-nav-link:nth-child(1) {
+                transition-delay: 0.2s;
+            }
+            
+            .menu-overlay.active .mobile-nav-link:nth-child(2) {
+                transition-delay: 0.3s;
+            }
+            
+            .menu-overlay.active .mobile-nav-link:nth-child(3) {
+                transition-delay: 0.4s;
+            }
+            
+            .menu-overlay.active .mobile-nav-link:nth-child(4) {
+                transition-delay: 0.5s;
+            }
+            
+            .menu-overlay.active .mobile-nav-link:nth-child(5) {
+                transition-delay: 0.6s;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <nav class="navbar glassmorphism py-4 fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#" class="text-2xl font-bold bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent hover-lift" data-key="brandName">Abdelmounim Zahri</a>
+            </div>
+            
+            <div class="desktop-menu flex items-center">
+                <ul class="flex space-x-8">
+                    <li style="margin-left: 20px;">
+                        <a href="#home" class="nav-link text-white hover:text-green-400 flex items-center"><i class="fas fa-home ml-1 nav-icon-animate"></i> <span data-key="navHome">الرئيسية</span></a>
+                    </li>
+                    
+                    <li><a href="#services" class="nav-link text-white hover:text-green-400 flex items-center"><i class="fas fa-tools ml-1 nav-icon-animate"></i> <span data-key="navServices">الخدمات</span></a></li>
+                    <li><a href="#portfolio" class="nav-link text-white hover:text-green-400 flex items-center"><i class="fas fa-images ml-1 nav-icon-animate"></i> <span data-key="navPortfolio">معرض الأعمال</span></a></li>
+                    <li><a href="#about" class="nav-link text-white hover:text-green-400 flex items-center"><i class="fas fa-user ml-1 nav-icon-animate"></i> <span data-key="navAbout">من أنا</span></a></li>
+                    <li><a href="#contact" class="nav-link text-white hover:text-green-400 flex items-center"><i class="fas fa-envelope ml-1 nav-icon-animate"></i> <span data-key="navContact">اتصل بنا</span></a></li>
+                </ul>
+                </div>
+            
+            <div class="hamburger cursor-pointer">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="menu-overlay">
+        <a href="#home" class="mobile-nav-link text-white hover:text-green-400 mb-6 flex items-center justify-center"><i class="fas fa-home ml-2 mobile-nav-icon"></i> <span data-key="navHome">الرئيسية</span></a>
+        <a href="#services" class="mobile-nav-link text-white hover:text-green-400 mb-6 flex items-center justify-center"><i class="fas fa-tools ml-2 mobile-nav-icon"></i> <span data-key="navServices">الخدمات</span></a>
+        <a href="#portfolio" class="mobile-nav-link text-white hover:text-green-400 mb-6 flex items-center justify-center"><i class="fas fa-images ml-2 mobile-nav-icon"></i> <span data-key="navPortfolio">معرض الأعمال</span></a>
+        <a href="#about" class="mobile-nav-link text-white hover:text-green-400 mb-6 flex items-center justify-center"><i class="fas fa-user ml-2 mobile-nav-icon"></i> <span data-key="navAbout">من أنا</span></a>
+        <a href="#contact" class="mobile-nav-link text-white hover:text-green-400 flex items-center justify-center"><i class="fas fa-envelope ml-2 mobile-nav-icon"></i> <span data-key="navContact">اتصل بنا</span></a>
+        <button id="language-toggle-mobile" class="mt-6 px-4 py-2 rounded-lg text-white font-medium hover-scale glassmorphism">
+            English
+        </button>
+    </div>
+    
+    <style>
+        /* Navbar animations */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            right: 0;
+            background: linear-gradient(90deg, var(--green-secondary), var(--green-primary)); /* Green gradient for underline */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+            right: auto;
+            left: 0;
+        }
+        
+        .nav-icon-animate {
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-link:hover .nav-icon-animate {
+            transform: translateY(-3px);
+        }
+        
+        .mobile-nav-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-nav-link:hover .mobile-nav-icon {
+            transform: scale(1.2);
+        }
+        
+        /* Brand hover animation */
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Hamburger animations */
+        .hamburger {
+            transition: transform 0.3s ease;
+        }
+        
+        .hamburger:hover {
+            transform: rotate(5deg);
+        }
+        
+        /* Navbar shadow on scroll */
+        .navbar-scrolled {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Darker shadow */
+            backdrop-filter: blur(12px);
+        }
+
+        /* Floating Language Button (FAB) */
+        .language-fab {
+            position: fixed;
+    bottom: 35px;
+    right: 15px;
+    background: linear-gradient(45deg, #1e965b, #3cb478);
+    color: white;
+    border-radius: 30px;
+    padding: 12px 22px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 999;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+        }
+
+        .language-fab:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(60, 180, 120, 0.5);
+        }
+
+        /* Responsive Adjustments for FAB */
+        @media (max-width: 768px) {
+            .language-fab {
+                bottom: 15px;
+                right: 15px; /* **تثبيته على اليمين دائمًا في الجوال أيضًا** */
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Close mobile menu if open
+                    document.querySelector('.menu-overlay').classList.remove('active');
+                    document.querySelector('.hamburger').classList.remove('active');
+                    
+                    // Smooth scroll
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Offset for navbar height
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+    </script>
+    <section id="home" class="min-h-screen hero-gradient flex items-center pt-20">
+    <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute w-72 h-72 rounded-full bg-green-600/10 blur-xl -top-20 right-1/4 animate-float"></div>
+    <div class="absolute w-64 h-64 rounded-full bg-green-500/10 blur-xl bottom-10 left-1/4 animate-float-delay"></div>
+    <div class="absolute w-48 h-48 rounded-full bg-green-700/10 blur-xl top-1/2 right-10 animate-float-slow"></div>
+    
+    <div class="absolute w-56 h-56 rounded-full bg-green-500/10 blur-xl top-1/3 left-10 animate-pulse"></div>
+    <div class="absolute w-80 h-80 rounded-full bg-green-500/10 blur-xl bottom-1/4 right-1/3 animate-float-reverse"></div>
+    <div class="absolute w-40 h-40 rounded-full bg-green-600/10 blur-xl top-20 left-1/3 animate-spin-slow"></div>
+    
+    <div class="absolute inset-0">
+        <div class="absolute w-2 h-2 rounded-full bg-white/20 top-1/4 left-1/5 animate-twinkle"></div>
+        <div class="absolute w-3 h-3 rounded-full bg-white/30 top-1/2 left-2/3 animate-twinkle-delay"></div>
+        <div class="absolute w-1 h-1 rounded-full bg-white/20 top-3/4 left-1/4 animate-twinkle-slow"></div>
+        <div class="absolute w-2 h-2 rounded-full bg-white/20 top-1/3 left-3/4 animate-twinkle-delay-long"></div>
+        <div class="absolute w-1 h-1 rounded-full bg-white/30 top-2/3 left-1/2 animate-twinkle"></div>
+    </div>
+    
+    <div class="absolute inset-0 bg-gradient-to-br from-transparent via-green-900/5 to-transparent"></div>
+</div>
+
+<style>
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes float-delay {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes float-reverse {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(20px); }
+}
+
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes twinkle-delay {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes twinkle-slow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.9; }
+}
+
+@keyframes twinkle-delay-long {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.6; }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay {
+    animation: float-delay 8s ease-in-out infinite;
+}
+
+.animate-float-slow {
+    animation: float-slow 10s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+    animation: float-reverse 9s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+    animation: spin-slow 15s linear infinite;
+}
+
+.animate-twinkle {
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+.animate-twinkle-delay {
+    animation: twinkle-delay 5s ease-in-out infinite;
+}
+
+.animate-twinkle-slow {
+    animation: twinkle-slow 7s ease-in-out infinite;
+}
+
+.animate-twinkle-delay-long {
+    animation: twinkle-delay-long 6s ease-in-out infinite;
+}
+</style>
+    <div class="container mx-auto px-1 py-16 relative z-10">
+        <div class="flex flex-col-reverse md:flex-row items-center justify-center">
+            <div class="md:w-1/2 mt-10 md:mt-0 px-6"> <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+                    <span class="colors" data-key="heroTitle">مرحباً، أنا عبد المنعم زهري</span>
+                </h1>
+                <h2 class="text-2xl md:text-3xl mb-6 text-gray-300 animate-fade-in-delay-1" data-key="heroSubtitle">مصمم جرافيك محترف</h2>
+                <p class="text-lg text-gray-300 mb-8 animate-fade-in-delay-2" data-key="heroDescription" dir="rtl">أقدم خدمات تصميم إبداعية تساعد علامتك التجارية على التألق. من الشعارات إلى الهويات البصرية المتكاملة، أنا هنا لتحويل أفكارك إلى تصاميم مذهلة.</p>
+                <div class="flex flex-wrap gap-4 animate-fade-in-delay-3">
+                    <a href="#services" class="btn-primary px-6 py-3 rounded-lg text-white font-medium hover-scale flex items-center">
+                        <i class="fas fa-palette ml-2"></i>
+                        <span data-key="exploreServicesBtn">استكشف خدماتي</span>
+                    </a>
+                    <a href="#contact" class="glassmorphism px-6 py-3 rounded-lg text-white font-medium hover-scale flex items-center">
+                        <i class="fas fa-paper-plane ml-2"></i>
+                        <span data-key="contactMeBtn">تواصل معي</span>
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center px-6"> <div class="relative w-64 h-64 md:w-80 md:h-80">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-br from-green-600 to-green-500 opacity-70 blur-xl animate-glow"></div>
+                    <div class="absolute inset-4 rounded-full glassmorphism flex items-center justify-center">
+                        <img src="imageds/profile_photo-removebg-preview.png" alt="Image Description" class="w-full h-full object-cover rounded-full opacity-90">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(0, -20px); }
+    }
+    
+    @keyframes float-delay {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(-15px, 15px); }
+    }
+    
+    @keyframes float-slow {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(20px, 10px); }
+    }
+    
+    @keyframes glow {
+        0%, 100% { opacity: 0.6; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-float {
+        animation: float 8s infinite ease-in-out;
+    }
+    
+    .animate-float-delay {
+        animation: float-delay 12s infinite ease-in-out;
+    }
+    
+    .animate-float-slow {
+        animation: float-slow 15s infinite ease-in-out;
+    }
+    
+    .animate-glow {
+        animation: glow 4s infinite ease-in-out;
+    }
+    
+    .animate-fade-in {
+        animation: fade-in 0.8s forwards;
+    }
+    
+    .animate-fade-in-delay-1 {
+        opacity: 0;
+        animation: fade-in 0.8s forwards;
+        animation-delay: 0.2s;
+    }
+    
+    .animate-fade-in-delay-2 {
+        opacity: 0;
+        animation: fade-in 0.8s forwards;
+        animation-delay: 0.4s;
+    }
+    
+    .animate-fade-in-delay-3 {
+        opacity: 0;
+        animation: fade-in 0.8s forwards;
+        animation-delay: 0.6s;
+    }
+    
+    .colors {
+        background-image: linear-gradient(90deg, var(--green-secondary), var(--green-primary)); /* Green gradient */
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gradient 8s ease infinite;
+    }
+    
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .hover-scale {
+        transition: all 0.3s ease;
+    }
+    
+    .hover-scale:hover {
+        transform: translateY(-3px);
+    }
+    
+    /* Add these classes to your existing style section */
+@media (max-width: 767px) {
+    .md\:text-right {
+        text-align: center !important;
+    }
+    
+    .flex-wrap {
+        justify-content: center;
+    }
+    
+    /* This helps center the buttons */
+    .md\:w-1\/2 .flex {
+        justify-content: center;
+    }
+}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <section id="services" class="py-20 bg-gradient-to-b from-gray-900 to-gray-800 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="particles-container" id="services-particles"></div>
+        </div>
+        
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-orb orb-blue" style="background: radial-gradient(circle, #1a8e4a, transparent);"></div> <div class="floating-orb orb-orange" style="background: radial-gradient(circle, #3cb478, transparent);"></div> <div class="floating-orb orb-purple" style="background: radial-gradient(circle, #2a965a, transparent);"></div> </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 services-header">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 gradient-text animate-shimmer" data-key="servicesTitle">خدماتي</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-green-500 to-green-700 mx-auto mb-6 animate-pulse-slow"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-key="servicesDescription" dir="rtl">أقدم مجموعة متنوعة من خدمات التصميم الجرافيكي لمساعدتك على بناء هوية بصرية قوية وجذابة.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card glassmorphism rounded-xl p-6 transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="service-icon bg-gradient-to-br from-green-600 to-green-400 w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto transform hover:rotate-12 transition-transform duration-300 hover:shadow-lg">
+                        <i class="bx bx-badge-check text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4 text-white" data-key="service1Title">تصميم الشعارات</h3>
+                    <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-400 mx-auto mb-4 transform transition-all duration-300 group-hover:w-24"></div>
+                    <p class="text-gray-300 text-center" data-key="service1Description" dir="rtl">نقدم تصميم شعارات مبتكرة تعكس هوية العلامات التجارية وتناسب رؤيتهم الخاصة.</p>
+                </div>
+                
+                <div class="service-card glassmorphism rounded-xl p-6 transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="service-icon bg-gradient-to-br from-green-600 to-green-400 w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto transform hover:rotate-12 transition-transform duration-300 hover:shadow-lg">
+                        <i class="bx bx-palette text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4 text-white" data-key="service2Title">تصميم الهوية البصرية</h3>
+                    <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-400 mx-auto mb-4 transform transition-all duration-300 group-hover:w-24"></div>
+                    <p class="text-gray-300 text-center" data-key="service2Description" dir="rtl">تصميم شامل للهويات البصرية يشمل الألوان والخطوط والتطبيقات الترويجية التي تميز العلامة التجارية.</p>
+                </div>
+                
+                <div class="service-card glassmorphism rounded-xl p-6 transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="service-icon bg-gradient-to-br from-green-600 to-green-400 w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto transform hover:rotate-12 transition-transform duration-300 hover:shadow-lg">
+                        <i class="bx bx-printer text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4 text-white" data-key="service3Title">تصميم المطبوعات</h3>
+                    <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-400 mx-auto mb-4 transform transition-all duration-300 group-hover:w-24"></div>
+                    <p class="text-gray-300 text-center" data-key="service3Description" dir="rtl">من الكتيبات إلى اللوحات الإعلانية، نقدم تصميمات مطبوعة مبتكرة ومتوافقة مع معايير الجودة العالية.</p>
+                </div>
+                
+                <div class="service-card glassmorphism rounded-xl p-6 transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="service-icon bg-gradient-to-br from-green-600 to-green-400 w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto transform hover:rotate-12 transition-transform duration-300 hover:shadow-lg">
+                        <i class="bx bx-devices text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4 text-white" data-key="service4Title">تصميمات الوسائط الرقمية</h3>
+                    <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-400 mx-auto mb-4 transform transition-all duration-300 group-hover:w-24"></div>
+                    <p class="text-gray-300 text-center" data-key="service4Description" dir="rtl">تصميمات للإعلانات الرقمية، المواقع الإلكترونية، والرسوم المتحركة التي تُبهر الجمهور وتلفت الانتباه.</p>
+                </div>
+                
+                <div class="service-card glassmorphism rounded-xl p-6 transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="service-icon bg-gradient-to-br from-green-600 to-green-400 w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto transform hover:rotate-12 transition-transform duration-300 hover:shadow-lg">
+                        <i class="bx bx-mobile-alt text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4 text-white" data-key="service5Title">تصميمات واجهات المستخدم</h3>
+                    <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-400 mx-auto mb-4 transform transition-all duration-300 group-hover:w-24"></div>
+                    <p class="text-gray-300 text-center" data-key="service5Description" dir="rtl">تحسين تجربة المستخدم لتطبيقات المواقع والهواتف الذكية مع تصميمات تفاعلية وتجربة مستخدم سلسة.</p>
+                </div>
+                
+                <div class="service-card glassmorphism rounded-xl p-6 transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="service-icon bg-gradient-to-br from-green-600 to-green-400 w-20 h-20 rounded-full flex items-center justify-center mb-6 mx-auto transform hover:rotate-12 transition-transform duration-300 hover:shadow-lg">
+                        <i class="bx bx-bulb text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4 text-white" data-key="service6Title">استشارات تصميمية</h3>
+                    <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-400 mx-auto mb-4 transform transition-all duration-300 group-hover:w-24"></div>
+                    <p class="text-gray-300 text-center" data-key="service6Description" dir="rtl">نقدم استشارات متخصصة في كل ما يتعلق بالتصميم الجرافيكي لمساعدتك على اتخاذ القرارات المناسبة لمشروعك.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <style>
+        /* Text gradient fix */
+        .gradient-text {
+            background: linear-gradient(to right, var(--green-secondary), var(--green-primary)); /* Green gradient */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        /* Shimmer animation for headings */
+        .animate-shimmer {
+            background-size: 200% 200%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 100% 0; }
+            50% { background-position: 0 0; }
+            100% { background-position: 100% 0; }
+        }
+        
+        /* Improved glassmorphism effect */
+        .glassmorphism {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .glassmorphism:hover {
+            box-shadow: 0 15px 40px rgba(30, 150, 90, 0.25); /* Greenish shadow on hover */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Enhanced button glow effect */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            border: 1px solid rgba(30, 150, 90, 0.3); /* Green border */
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(30, 150, 90, 0.8); /* Green glow */
+            transform: translateY(-2px);
+        }
+        
+        .btn-glow:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            animation: glowingEffect 2s infinite;
+        }
+        
+        /* Enhanced CTA Button with 3D effect */
+        .cta-button {
+            background: linear-gradient(135deg, var(--green-primary), var(--green-secondary)); /* Green gradient */
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(30, 150, 90, 0.5); /* Green shadow */
+            border-bottom: 4px solid rgba(15, 75, 45, 0.6); /* Darker green border */
+        }
+        
+        .cta-button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+        }
+        
+        .cta-button:hover:after {
+            animation: cta-shine 1.5s ease-out;
+        }
+        
+        /* Floating orbs in background */
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        
+        .orb-1 {
+            background: radial-gradient(circle, #1a8e4a, transparent); /* Green orb */
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+            animation: float1 15s infinite alternate ease-in-out;
+        }
+        
+        .orb-2 {
+            background: radial-gradient(circle, #3cb478, transparent); /* Green orb */
+            width: 300px;
+            height: 300px;
+            bottom: 10%;
+            left: -100px;
+            animation: float2 20s infinite alternate ease-in-out;
+        }
+        
+        .orb-3 {
+            background: radial-gradient(circle, #2a965a, transparent); /* Green orb */
+            width: 250px;
+            height: 250px;
+            top: 40%;
+            right: 15%;
+            animation: float3 18s infinite alternate ease-in-out;
+        }
+        
+        /* Portfolio header entrance animation */
+        .portfolio-header {
+            animation: fadeInUp 1.2s ease-out;
+        }
+        
+        /* Slow bounce animation for icons */
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s infinite;
+        }
+        
+        /* Enhanced animations */
+        @keyframes glowingEffect {
+            0% {
+                transform: rotate(45deg) translateX(-100%);
+            }
+            100% {
+                transform: rotate(45deg) translateX(100%);
+            }
+        }
+        
+        @keyframes cta-shine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        @keyframes float1 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-50px, 50px) rotate(10deg); }
+        }
+        
+        @keyframes float2 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(50px, -30px) rotate(-15deg); }
+        }
+        
+        @keyframes float3 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-30px, -40px) rotate(8deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+        
+        /* Set RTL direction for Arabic text */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        *, ::after, ::before {
+    --tw-ring-inset: var(--tw-empty);
+    margin: 0 1px;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgba(59, 130, 246, 0.5); /* This is a Tailwind default, consider changing to a green here */
+    --tw-ring-shadow: 0 0 #0000;
+}
+    </style>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script>
+        // Initialize on document load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize particles.js with enhanced settings
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 60,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": ["#1a8e4a", "#3cb478", "#2a965a"] /* Green shades for particles */
+                        },
+                        "shape": {
+                            "type": ["circle", "triangle", "polygon"],
+                            "polygon": {
+                                "nb_sides": 6
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.3,
+                            "random": true,
+                            "anim": {
+                                "enable": true,
+                                "speed": 0.5,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": true,
+                                "speed": 2,
+                                "size_min": 0.1,
+                                "size_max": 5, /* Added max size for variety */
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#1a8e4a", /* Green lines */
+                            "opacity": 0.2,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 1.5,
+                            "direction": "none",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": true,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 0.5
+                                }
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+            
+            // Initialize VanillaTilt for 3D hover effect
+            VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+                max: 5,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.2,
+            });
+            
+            // Trigger animations when elements come into view
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+            
+            // Set initial state and observe each item
+            portfolioItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transitionDelay = `${index * 0.15}s`;
+                observer.observe(item);
+            });
+        });
+    </script>
+    
+    <section id="portfolio" class="py-20 bg-gradient-to-b from-gray-900 to-gray-800 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="particles-container" id="particles-js"></div>
+        </div>
+        
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-orb orb-1" style="background: radial-gradient(circle, #1a8e4a, transparent);"></div> <div class="floating-orb orb-2" style="background: radial-gradient(circle, #3cb478, transparent);"></div> <div class="floating-orb orb-3" style="background: radial-gradient(circle, #2a965a, transparent);"></div> </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 portfolio-header">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 gradient-text animate-shimmer" data-key="portfolioTitle">معرض الأعمال</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-green-500 to-green-700 mx-auto mb-6 animate-pulse-slow"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-key="portfolioDescription" dir="rtl">مجموعة مختارة من مشاريعي السابقة التي تعكس أسلوبي وخبرتي في التصميم الجرافيكي.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="portfolio-item glassmorphism rounded-xl overflow-hidden transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="h-64 bg-gradient-to-br from-green-600 to-green-400 relative group overflow-hidden">
+                        <img src="imageds/social mockup.png" alt="تصاميم سوشيال ميديا" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center">
+                            <div class="text-white text-center p-6 transform translate-y-8  group-hover:translate-y-0 transition-transform duration-500 w-full">
+                                <div class="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2 animate-bounce-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    <span class="font-bold" data-key="viewProject">عرض المشروع</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-3 text-white" data-key="portfolio1Title">تصاميم سوشيال ميديا احترافية</h3>
+                        <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-700 mx-auto mb-3 transform transition-all duration-300 group-hover:w-32"></div>
+                        <p class="text-gray-300 mb-4" data-key="portfolio1Description" dir="rtl">نحن نقدم لك تصاميم سوشيال ميديا مبتكرة وجذابة تساعد في تحسين تواجدك على الإنترنت. تواصل معنا الآن لتبدأ!</p>
+                        <a href="social.html" class="btn-glow mt-2 inline-block px-6 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition-all duration-300" data-key="viewDesignsBtn">عرض التصاميم</a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item glassmorphism rounded-xl overflow-hidden transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="h-64 bg-gradient-to-br from-green-600 to-green-400 relative group overflow-hidden">
+                        <img src="logos/logos_mockup_1080_full.png" alt="تصميم هوية بصرية" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center">
+                            <div class="text-white text-center p-6 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 w-full">
+                                <div class="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2 animate-bounce-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    <span class="font-bold" data-key="viewProject">عرض المشروع</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-3 text-white" data-key="portfolio2Title">تصميم هوية بصرية تعزز شركتك</h3>
+                        <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-700 mx-auto mb-3 transform transition-all duration-300 group-hover:w-32"></div>
+                        <p class="text-gray-300 mb-4" data-key="portfolio2Description" dir="rtl">نقدم لك تصاميم هوية بصرية مميزة تساعد في تعزيز تواجد شركتك في السوق وجذب الانتباه. تواصل معي الآن لتحصل على تصميم يعكس قيم شركتك.</p>
+                        <a href="branding.html" class="btn-glow mt-2 inline-block px-6 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition-all duration-300" data-key="viewDesignsBtn">عرض التصاميم</a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item glassmorphism rounded-xl overflow-hidden transform transition-all duration-700 hover:scale-105 hover:shadow-2xl" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="h-64 bg-gradient-to-br from-green-600 to-green-400 relative group overflow-hidden">
+                        <img src="imageds/222042901_65f35788-4050-4d04-9f49-8156124ba757.png" alt="تصاميم منيو" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center">
+                            <div class="text-white text-center p-6 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 w-full">
+                                <div class="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2 animate-bounce-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    <span class="font-bold" data-key="viewProject">عرض المشروع</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-3 text-white" data-key="portfolio3Title">تصميم بطاقات عمل لبراندك</h3>
+                        <div class="w-16 h-1 bg-gradient-to-r from-green-500 to-green-700 mx-auto mb-3 transform transition-all duration-300 group-hover:w-32"></div>
+                        <p class="text-gray-300 mb-4" data-key="portfolio3Description" dir="rtl">اقدم لكم تصاميم بطاقات عمل مبتكرة وجذابة تساعد في تحسين واجهة شركتكم او مكان عملكم .</p>
+                        <a href="menu.html" class="btn-glow mt-2 inline-block px-6 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition-all duration-300" data-key="viewDesignsBtn">عرض التصاميم</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="#contact" class="cta-button px-8 py-4 rounded-lg text-white font-medium inline-block transition-all duration-500 transform hover:scale-105 hover:rotate-1" data-key="newProjectBtn">طلب مشروع جديد</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-2/5">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-green-600 to-green-500 opacity-70 blur-xl"></div>
+                        <div class="absolute inset-4 rounded-full glassmorphism flex items-center justify-center">
+                            <img src="imageds/profile_photo-removebg-preview.png" alt="عبد المنعم زهري" 
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-3/5">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent" data-key="aboutTitle">من أنا</h2>
+                    <p class="text-lg text-gray-300 mb-4" data-key="aboutP1">أنا عبد المنعم زهري، مصمم جرافيك محترف متخصص في إنشاء هويات بصرية فريدة وتصاميم إبداعية تساعد الشركات على التميز في سوق تنافسي.</p>
+                    <p class="text-lg text-gray-300 mb-4" data-key="aboutP2">لدي أكثر من 6 سنوات من الخبرة في مجال التصميم الجرافيكي، وقد عملت مع العديد من العلامات التجارية المحلية والدولية لمساعدتهم على تحقيق رؤيتهم البصرية.</p>
+                    <p class="text-lg text-gray-300 mb-6" data-key="aboutP3">أؤمن بأن التصميم الجيد هو الذي يجمع بين الجمال والوظيفة، وأسعى دائمًا لتحقيق هذا التوازن في كل مشروع أعمل عليه.</p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="btn-primary px-6 py-3 rounded-lg text-white font-medium hover-scale" data-key="contactMeBtn2">تواصل معي</a>
+                        <a href="#services" class="glassmorphism px-6 py-3 rounded-lg text-white font-medium hover-scale" data-key="myServicesBtn">خدماتي</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent" data-key="contactTitle">تواصل معي</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto" data-key="contactDescription">هل لديك مشروع في ذهنك؟ أو استفسار حول خدماتي؟ لا تتردد في التواصل معي.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+    <form action="https://api.web3forms.com/submit" method="POST" class="glassmorphism rounded-xl p-8 shadow-lg">
+        <input type="hidden" name="access_key" value="0d057de9-50d3-40a6-a33c-9be6a7c4ddac">
+
+        <input type="hidden" name="redirect" value="index.html"> 
+        
+        <input type="hidden" name="botcheck" value="">
+
+        <div class="mb-6">
+            <label for="name" class="block text-white mb-2" data-key="formName">الاسم</label>
+            <input type="text" id="name" name="name" required class="glassmorphism w-full p-3 rounded-lg bg-transparent text-white border border-gray-600 focus:border-green-500 focus:outline-none transition">
+        </div>
+        <div class="mb-6">
+            <label for="email" class="block text-white mb-2" data-key="formEmail">البريد الإلكتروني</label>
+            <input type="email" id="email" name="email" required class="glassmorphism w-full p-3 rounded-lg bg-transparent text-white border border-gray-600 focus:border-green-500 focus:outline-none transition">
+        </div>
+        <div class="mb-6">
+            <label for="message" class="block text-white mb-2" data-key="formMessage">الرسالة</label>
+            <textarea id="message" name="message" rows="5" required class="glassmorphism w-full p-3 rounded-lg bg-transparent text-white border border-gray-600 focus:border-green-500 focus:outline-none transition"></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full py-3 rounded-lg text-white font-medium hover-scale" data-key="sendMessageBtn">إرسال الرسالة</button>
+    </form>
+</div>
+                
+                <div class="md:w-1/2">
+                    <div class="glassmorphism rounded-xl p-8 shadow-lg h-full">
+                        <h3 class="text-2xl font-bold mb-6 text-white" data-key="contactInfoTitle">معلومات التواصل</h3>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-br from-green-600 to-green-400 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="bx bx-envelope text-xl text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-300" data-key="emailLabel">البريد الإلكتروني</h4>
+                                <p class="text-white">abdelmounimzahri@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-br from-green-600 to-green-400 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="bx bx-phone text-xl text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-300" data-key="phoneLabel">الهاتف</h4>
+                                <p class="text-white">+212 605563656</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-8">
+                            <div class="bg-gradient-to-br from-green-600 to-green-400 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="bx bx-map text-xl text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-300" data-key="addressLabel">العنوان</h4>
+                                <p class="text-white" data-key="addressValue">الدار البيضاء، المغرب</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-4">
+                            <a href="https://www.facebook.com/profile.php?id=61576873267996" class="glassmorphism w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-all hover-scale">
+                                <i class="bx bxl-facebook text-xl"></i>
+                            </a>
+                            <a href="https://x.com/abdelmounimZa" class="glassmorphism w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-green-400 transition-all hover-scale">
+                                <i class="bx bxl-twitter text-xl"></i>
+                            </a>
+                            <a href="https://www.instagram.com/i.az_design/" class="glassmorphism w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-all hover-scale">
+                                <i class="bx bxl-instagram text-xl"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/abdelmounim-zahri-098b8832b/" class="glassmorphism w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-green-800 transition-all hover-scale">
+                                <i class="bx bxl-linkedin text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="py-8 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-400" data-key="footerText">© 2023 Abdelmounim Zahri. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+    
+    <button id="language-fab" class="language-fab">
+        English
+    </button>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const menuOverlay = document.querySelector('.menu-overlay');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+        
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+        
+        // Navbar Scroll Effect
+        const navbar = document.querySelector('.navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Language Toggle Functionality
+        const translations = {
+            ar: {
+                brandName: "عبد المنعم زهري",
+                navHome: "الرئيسية",
+                navServices: "الخدمات",
+                navPortfolio: "معرض الأعمال",
+                navAbout: "من أنا",
+                navContact: "اتصل بنا",
+                heroTitle: "مرحباً، أنا عبد المنعم زهري",
+                heroSubtitle: "مصمم جرافيك محترف",
+                heroDescription: "أقدم خدمات تصميم إبداعية تساعد علامتك التجارية على التألق. من الشعارات إلى الهويات البصرية المتكاملة، أنا هنا لتحويل أفكارك إلى تصاميم مذهلة.",
+                exploreServicesBtn: "استكشف خدماتي",
+                contactMeBtn: "تواصل معي",
+                servicesTitle: "خدماتي",
+                servicesDescription: "أقدم مجموعة متنوعة من خدمات التصميم الجرافيكي لمساعدتك على بناء هوية بصرية قوية وجذابة.",
+                service1Title: "تصميم الشعارات",
+                service1Description: "نقدم تصميم شعارات مبتكرة تعكس هوية العلامات التجارية وتناسب رؤيتهم الخاصة.",
+                service2Title: "تصميم الهوية البصرية",
+                service2Description: "تصميم شامل للهويات البصرية يشمل الألوان والخطوط والتطبيقات الترويجية التي تميز العلامة التجارية.",
+                service3Title: "تصميم المطبوعات",
+                service3Description: "من الكتيبات إلى اللوحات الإعلانية، نقدم تصميمات مطبوعة مبتكرة ومتوافقة مع معايير الجودة العالية.",
+                service4Title: "تصميمات الوسائط الرقمية",
+                service4Description: "تصميمات للإعلانات الرقمية، المواقع الإلكترونية، والرسوم المتحركة التي تُبهر الجمهور وتلفت الانتباه.",
+                service5Title: "تصميمات واجهات المستخدم",
+                service5Description: "تحسين تجربة المستخدم لتطبيقات المواقع والهواتف الذكية مع تصميمات تفاعلية وتجربة مستخدم سلسة.",
+                service6Title: "استشارات تصميمية",
+                service6Description: "نقدم استشارات متخصصة في كل ما يتعلق بالتصميم الجرافيكي لمساعدتك على اتخاذ القرارات المناسبة لمشروعك.",
+                portfolioTitle: "معرض الأعمال",
+                portfolioDescription: "مجموعة مختارة من مشاريعي السابقة التي تعكس أسلوبي وخبرتي في التصميم الجرافيكي.",
+                viewProject: "عرض المشروع",
+                portfolio1Title: "تصاميم سوشيال ميديا احترافية",
+                portfolio1Description: " اقدم لك تصاميم سوشيال ميديا مبتكرة وجذابة تساعد في تحسين تواجدك على الإنترنت. تواصل معنا الآن لتبدأ!",
+                viewDesignsBtn: "عرض التصاميم",
+                portfolio2Title: "تصميم هوية بصرية تعزز شركتك",
+                portfolio2Description: "اقدم لك تصاميم هوية بصرية مميزة تساعد في تعزيز تواجد شركتك في السوق وجذب الانتباه. تواصل معي الآن لتحصل على تصميم يعكس قيم شركتك.",
+                portfolio3Title: "تصميم بطاقات عمل",
+                portfolio3Description: "أقدّم لكم تصاميم بطاقات عمل فخمة، مبتكرة، وجذّابة، بجودة طباعة عالية ومقاسات مدروسة؛ ترفع واجهة شركتكم أو مشروعكم، وتعكس هويّتكم بأعلى درجات الاحتراف، وتترك بصمة أولى ما تنسى",
+                newProjectBtn: "طلب مشروع جديد",
+                aboutTitle: "من أنا",
+                aboutP1: "أنا عبد المنعم زهري، مصمم جرافيك محترف متخصص في إنشاء هويات بصرية فريدة وتصاميم إبداعية تساعد الشركات على التميز في سوق تنافسي.",
+                aboutP2: "لدي أكثر من 6 سنوات من الخبرة في مجال التصميم الجرافيكي، وقد عملت مع العديد من العلامات التجارية المحلية والدولية لمساعدتهم على تحقيق رؤيتهم البصرية.",
+                aboutP3: "أؤمن بأن التصميم الجيد هو الذي يجمع بين الجمال والوظيفة، وأسعى دائمًا لتحقيق هذا التوازن في كل مشروع أعمل عليه.",
+                contactMeBtn2: "تواصل معي",
+                myServicesBtn: "خدماتي",
+                contactTitle: "تواصل معي",
+                contactDescription: "هل لديك مشروع في ذهنك؟ أو استفسار حول خدماتي؟ لا تتردد في التواصل معي.",
+                formName: "الاسم",
+                formEmail: "البريد الإلكتروني",
+                formMessage: "الرسالة",
+                sendMessageBtn: "إرسال الرسالة",
+                contactInfoTitle: "معلومات التواصل",
+                emailLabel: "البريد الإلكتروني",
+                phoneLabel: "الهاتف",
+                addressLabel: "العنوان",
+                addressValue: "الدار البيضاء، المغرب",
+                footerText: "© 2023 Abdelmounim Zahri. جميع الحقوق محفوظة."
+            },
+            en: {
+                brandName: "Abdelmounim Zahri",
+                navHome: "Home",
+                navServices: "Services",
+                navPortfolio: "Portfolio",
+                navAbout: "About Me",
+                navContact: "Contact",
+                heroTitle: "Hello, I'm Abdelmounim Zahri",
+                heroSubtitle: "Professional Graphic Designer",
+                heroDescription: "I offer creative design services to help your brand shine. From logos to complete visual identities, I'm here to turn your ideas into stunning designs.",
+                exploreServicesBtn: "Explore My Services",
+                contactMeBtn: "Contact Me",
+                servicesTitle: "My Services",
+                servicesDescription: "I offer a variety of graphic design services to help you build a strong and attractive visual identity.",
+                service1Title: "Logo Design",
+                service1Description: "We provide innovative logo designs that reflect brand identity and suit their specific vision.",
+                service2Title: "Visual Identity Design",
+                service2Description: "Comprehensive visual identity design including colors, fonts, and promotional applications that distinguish the brand.",
+                service3Title: "Print Design",
+                service3Description: "From brochures to billboards, we offer innovative print designs that comply with high-quality standards.",
+                service4Title: "Digital Media Design",
+                service4Description: "Designs for digital advertisements, websites, and animations that impress the audience and grab attention.",
+                service5Title: "User Interface Design",
+                service5Description: "Improving user experience for website and smartphone applications with interactive designs and a smooth user experience.",
+                service6Title: "Design Consultations",
+                service6Description: "We offer specialized consultations in all matters related to graphic design to help you make the right decisions for your project.",
+                portfolioTitle: "Portfolio",
+                portfolioDescription: "A curated collection of my past projects that reflect my style and expertise in graphic design.",
+                viewProject: "View Project",
+                portfolio1Title: "Professional Social Media Designs",
+                portfolio1Description: "I offer innovative and attractive social media designs that help improve your online presence. Contact me now to get started!",
+                viewDesignsBtn: "View Designs",
+                portfolio2Title: "Visual Identity Design to Enhance Your Company",
+                portfolio2Description: "I provide distinctive visual identity designs that help enhance your company's presence in the market and attract attention. Contact us now to get a design that reflects your company's values.",
+                portfolio3Title: "Business cards for your brand",
+                portfolio3Description: " I offer luxurious, innovative, and eye-catching business-card designs—printed in high quality and precisely sized—to elevate your company’s or project’s image, showcase your brand identity with top-tier professionalism, and leave an unforgettable first impression.",
+                newProjectBtn: "Request New Project",
+                aboutTitle: "About Me",
+                aboutP1: "I am Abdelmounim Zahri, a professional graphic designer specializing in creating unique visual identities and creative designs that help companies stand out in a competitive market.",
+                aboutP2: "I have over 6 years of experience in graphic design, and I have worked with many local and international brands to help them achieve their visual vision.",
+                aboutP3: "I believe that good design combines beauty and function, and I always strive to achieve this balance in every project I work on.",
+                contactMeBtn2: "Contact Me",
+                myServicesBtn: "My Services",
+                contactTitle: "Contact Me",
+                contactDescription: "Do you have a project in mind? Or an inquiry about my services? Feel free to contact me.",
+                formName: "Name",
+                formEmail: "Email",
+                formMessage: "Message",
+                sendMessageBtn: "Send Message",
+                contactInfoTitle: "Contact Information",
+                emailLabel: "Email",
+                phoneLabel: "Phone",
+                addressLabel: "Address",
+                addressValue: "Casablanca, Morocco",
+                footerText: "© 2023 Abdelmounim Zahri. All rights reserved."
+            }
+        };
+
+        let currentLanguage = localStorage.getItem('userLanguage') || 'ar';
+
+        function setLanguage(lang) {
+            localStorage.setItem('userLanguage', lang);
+            currentLanguage = lang;
+            const htmlTag = document.documentElement;
+            htmlTag.setAttribute('lang', lang);
+            htmlTag.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            // Update title
+            // Note: This specific page does not have a data-key="pageTitle" in its <title>
+            // So we'll skip updating the title for this particular page based on the previous script's behavior
+            // If you wish to update the title, you'll need to add data-key="pageTitle" to your <title> tag
+
+            // Update text content based on the current language
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) { // Added check for translations[lang] existence
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update direction for specific elements that need it explicitly set (e.g., heroDescription, portfolioDescription, service descriptions)
+            document.querySelectorAll('[data-key*="Description"], [data-key="heroTitle"], [data-key="heroSubtitle"]').forEach(element => {
+                element.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            });
+            
+            // Update language FAB text
+            const languageFab = document.getElementById('language-fab');
+            if (languageFab) {
+                languageFab.textContent = lang === 'ar' ? 'English' : 'العربية';
+                // The position (right: 20px) is handled by CSS, so no JS manipulation needed here.
+            }
+
+            // Update mobile language toggle button text (if still present/visible)
+            const toggleButtonMobile = document.getElementById('language-toggle-mobile');
+            if (toggleButtonMobile) {
+                toggleButtonMobile.textContent = lang === 'ar' ? 'English' : 'العربية';
+            }
+
+            // Adjust nav-link margins if necessary (original code had this logic)
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (lang === 'ar') {
+                    link.style.marginLeft = '20px';
+                    link.style.marginRight = '0';
+                } else {
+                    link.style.marginLeft = '0';
+                    link.style.marginRight = '20px';
+                }
+            });
+        }
+
+        // Event listener for the Floating Language Button
+        const languageFabButton = document.getElementById('language-fab');
+        if (languageFabButton) {
+            languageFabButton.addEventListener('click', () => {
+                const newLang = currentLanguage === 'ar' ? 'en' : 'ar';
+                setLanguage(newLang);
+            });
+        }
+
+        // Event listener for the mobile language toggle button (if still in use)
+        const languageToggleButtonMobile = document.getElementById('language-toggle-mobile');
+        if (languageToggleButtonMobile) {
+            languageToggleButtonMobile.addEventListener('click', () => {
+                const newLang = currentLanguage === 'ar' ? 'en' : 'ar';
+                setLanguage(newLang);
+                // Also close the mobile menu after language change
+                hamburger.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        }
+
+        // Set initial language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLanguage); // Sets Arabic as default on load
+        });
+    </script>
+</body>
+</html>

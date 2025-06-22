@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">معرض الأعمال | Abdelmounim Zahri</title>
+    <link rel="icon" type="image/png" href="imageds/ChatGPT.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.0/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            /* Changed to dark green gradient */
+            background: linear-gradient(135deg, #0a1a1a 0%, #102d2d 50%, #0e2121 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Changed to green tones */
+            background: radial-gradient(circle at 20% 50%, rgba(30, 150, 90, 0.1) 0%, transparent 50%),
+                                     radial-gradient(circle at 80% 20%, rgba(60, 180, 120, 0.1) 0%, transparent 50%),
+                                     radial-gradient(circle at 40% 80%, rgba(30, 150, 90, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgFloat 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        /* Glassmorphism Effect */
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.08); /* Slightly less opaque for dark theme */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Lighter border for contrast */
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            padding: -1px 1px;
+            border-radius: 8px;
+            margin: 0 10px;
+        }
+
+        .nav-link:hover {
+            /* Changed hover background to green */
+            background: rgba(60, 180, 120, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: left 0.3s ease;
+        }
+
+        .mobile-nav-link {
+            font-size: 1.5rem;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        /* Gallery Cards */
+        .gallery-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .gallery-card:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-card:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-card:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-card:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-card:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-card:nth-child(6) { animation-delay: 0.6s; }
+        .gallery-card:nth-child(7) { animation-delay: 0.7s; }
+        .gallery-card:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); /* Darker shadow for dark theme */
+        }
+
+        .gallery-img {
+            width: 100%; /* Take full width of its container */
+            padding-top: 100%; /* This creates a 1:1 aspect ratio container for the image */
+            position: relative; /* Needed for absolute positioning of the inner image */
+            overflow: hidden; /* Hide anything outside the square container */
+            border-radius: 10px 10px 0 0;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-img img { /* Target the actual image inside the .gallery-img div */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-card:hover .gallery-img img { /* Apply hover effect to the inner image */
+            transform: scale(1.05);
+        }
+
+        /* تعديل: جعل ارتفاع الـ caption ثابتًا أو بحد أدنى لضمان تماسك ارتفاع البطاقات */
+        .gallery-caption {
+            background: rgba(0, 0, 0, 0.7); /* Slightly transparent dark background */
+            color: white;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            border-radius: 0 0 10px 10px;
+            padding: 1.25rem; /* حافظ على هذا البادينغ */
+            min-height: 90px; /* اضبط هذا الارتفاع الأدنى ليناسب أطول وصف لديك */
+            overflow: hidden; /* هذا يخفي أي نص يتجاوز الارتفاع المحدد */
+            /* يمكنك إضافة: text-overflow: ellipsis; white-space: nowrap; إذا كنت تريد نقاطًا "..." ولكنها تعمل بشكل أفضل لسطر واحد */
+            /* أو استخدم multi-line ellipsis إذا كنت بحاجة لذلك (ابحث عن CSS multi-line ellipsis) */
+        }
+
+        /* Float Labels */
+        .float-label {
+            position: absolute;
+            /* Changed to green gradient */
+            background: linear-gradient(45deg, #1e965b, #3cb478);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darker shadow */
+            /* سيتم التحكم في left/right بواسطة JavaScript بناءً على اللغة */
+            top: 8px; /* قيمة ثابتة من الأعلى */
+        }
+
+        /* Icon containers */
+        .icon-container {
+            width: 50px;
+            height: 50px;
+            /* Changed to green gradient */
+            background: linear-gradient(45deg, #1e965b, #3cb478);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon-container:hover {
+            transform: translateY(-5px) scale(1.1);
+            /* Changed shadow to green */
+            box-shadow: 0 10px 20px rgba(60, 180, 120, 0.4);
+        }
+
+        /* Floating Language Button (FAB) */
+        .language-fab {
+            position: fixed;
+    bottom: 35px;
+    right: 15px;
+    background: linear-gradient(45deg, #1e965b, #3cb478);
+    color: white;
+    border-radius: 30px;
+    padding: 12px 22px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 999;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+        }
+
+        .language-fab:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(60, 180, 120, 0.5);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .gallery-card {
+                margin-bottom: 20px;
+            }
+            /* Adjust FAB position for mobile */
+            .language-fab {
+                bottom: 15px;
+                right: 15px; /* **تثبيته على اليمين دائمًا في الجوال أيضًا** */
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            /* لا حاجة لتعديل .gallery-img هنا بفضل padding-top: 100%; */
+        }
+
+        /* Title Animation */
+        .title-animate {
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: titleFade 1s ease 0.5s forwards;
+        }
+
+        @keyframes titleFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Description Animation */
+        .desc-animate {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: descFade 1s ease 1s forwards;
+        }
+
+        @keyframes descFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <nav class="navbar glassmorphism py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent">
+                    <i class='bx bxs-paint mr-2'></i><span data-key="brandName">Abdelmounim Zahri</span>
+                </a>
+            </div>
+            <div class="desktop-menu flex items-center">
+                <ul class="flex space-x-8">
+                    <li style="margin-left: 20px;">
+                        <a href="index.html" class="nav-link text-white hover:text-green-400">
+                            <i class='bx bxs-home'></i> <span data-key="navHome">الرئيسية</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#services" class="nav-link text-white hover:text-green-400">
+                            <i class='bx bxs-server'></i> <span data-key="navServices">الخدمات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#portfolio" class="nav-link text-white hover:text-green-400">
+                            <i class='bx bxs-image-alt'></i> <span data-key="navPortfolio">معرض الأعمال</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#about" class="nav-link text-white hover:text-green-400">
+                            <i class='bx bxs-user'></i> <span data-key="navAbout">من أنا</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#contact" class="nav-link text-white hover:text-green-400">
+                            <i class='bx bxs-envelope'></i> <span data-key="navContact">اتصل بنا</span>
+                        </a>
+                    </li>
+                    </ul>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="menu-overlay" id="mobileMenu">
+        <a href="index.html" class="mobile-nav-link text-white hover:text-green-400 mb-6">
+            <i class='bx bxs-home mr-2'></i> <span data-key="navHome">الرئيسية</span>
+        </a>
+        <a href="index.html#services" class="mobile-nav-link text-white hover:text-green-400 mb-6">
+            <i class='bx bxs-server mr-2'></i> <span data-key="navServices">الخدمات</span>
+        </a>
+        <a href="index.html#portfolio" class="mobile-nav-link text-white hover:text-green-400 mb-6">
+            <i class='bx bxs-image-alt mr-2'></i> <span data-key="navPortfolio">معرض الأعمال</span>
+        </a>
+        <a href="index.html#about" class="mobile-nav-link text-white hover:text-green-400 mb-6">
+            <i class='bx bxs-user mr-2'></i> <span data-key="navAbout">من أنا</span>
+        </a>
+        <a href="index.html#contact" class="mobile-nav-link text-white hover:text-green-400 mb-6" >
+            <i class='bx bxs-envelope mr-2'></i> <span data-key="navContact">اتصل بنا</span>
+        </a>
+        <button id="language-toggle-mobile" class="mobile-nav-link text-white hover:text-green-400 mb-6">
+            English
+        </button>
+    </div>
+
+    <main class="relative pt-32 pb-20 min-h-screen">
+        <div class="container mx-auto px-4 flex flex-col items-center">
+            <h1 class="title-animate text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-500 to-green-700 bg-clip-text text-transparent text-center" data-key="portfolioTitleMain">
+                <i class='bx bxs-palette mr-2'></i><span data-key="portfolioTitle">معرض الأعمال</span>
+            </h1>
+            <p class="desc-animate text-lg md:text-xl text-gray-300 max-w-2xl text-center mb-10" data-key="portfolioDescriptionMain" dir="rtl">
+                مجموعة مختارة من أعمالي التي تجمع بين الإبداع والدقة، تجدون هنا نماذج من التصاميم التي أنجزتها في مختلف المجالات. انقر على أي صورة لمعاينتها بالحجم الكامل.
+            </p>
+            
+            <section class="w-full">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 mx-auto">
+                    <div class="gallery-card glassmorphism">
+                        <span class="float-label" data-key="card1Tag"><i class='bx bxs-hot'></i> ابداع</span>
+                        <a href="imageds/fc70bef982047cee.png" title="تصاميم سوشيال ميديا" target="_blank">
+                            <div class="gallery-img"> <img src="imageds/fc70bef982047cee.png" alt="تصاميم سوشيال ميديا" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="p-5 gallery-caption" data-key="card1Description">
+                            <i class='bx bxl-instagram-alt text-green-400 mr-1'></i>
+                            تصميم سوشل ميديا لاعلان لمحل قطع السيارات
+                        </div>
+                    </div>
+
+                    <div class="gallery-card glassmorphism">
+                        <span class="float-label" data-key="card2Tag"><i class='bx bxs-moon'></i> رمضان</span>
+                        <a href="imageds/ramadan work.png" title="هوية بصرية" target="_blank">
+                            <div class="gallery-img">
+                                <img src="imageds/ramadan work.png" alt="تصميم هوية بصرية" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="p-5 gallery-caption" data-key="card2Description">
+                            <i class='bx bxs-star text-green-400 mr-1'></i>
+                            تصميم سوشل ميديا بطابع فطور رمضاني
+                        </div>
+                    </div>
+
+                    <div class="gallery-card glassmorphism">
+                        <span class="float-label" data-key="card3Tag"><i class='bx bxs-food-menu'></i> طعام</span>
+                        <a href="imageds/ramadans.jpg" title="منيو مطاعم" target="_blank">
+                            <div class="gallery-img">
+                                <img src="imageds/ramadans.jpg" alt="تصميم منيو مطعم" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="p-5 gallery-caption" data-key="card3Description">
+                            <i class='bx bxs-dish text-green-400 mr-1'></i>
+                            تصميم سوشل ميديا بطابع فطور رمضاني
+                        </div>
+                    </div>
+
+                    <div class="gallery-card glassmorphism">
+                        <span class="float-label" data-key="card4Tag"><i class='bx bxs-spray-can'></i> عطور</span>
+                        <a href="imageds/work parfume.png" title="تصميم بروشور" target="_blank">
+                            <div class="gallery-img">
+                                <img src="imageds/work parfume.png" alt="تصميم بروشور دعائي" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="p-5 gallery-caption" data-key="card4Description">
+                            <i class='bx bxs-droplet text-green-400 mr-1'></i>
+                            تصميم سوشل ميديا لعطر رجالي بطابع احمر 
+                        </div>
+                    </div>
+
+                    <div class="gallery-card glassmorphism">
+                        <span class="float-label" data-key="card5Tag"><i class='bx bxs-shield'></i> أمن</span>
+                        <a href="imageds/asd31.png" title="بوسترات واعلانات" target="_blank">
+                            <div class="gallery-img">
+                                <img src="imageds/asd31.png" alt="تصميم بوستر" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="p-5 gallery-caption" data-key="card5Description">
+                            <i class='bx bxs-lock-alt text-green-400 mr-1'></i>
+                            تصميم بوست دورة للأمن السيبيراني 
+                        </div>
+                    </div>
+
+                    <div class="gallery-card glassmorphism">
+                        <span class="float-label" data-key="card6Tag"><i class='bx bxs-baby-carriage'></i> اطفال</span>
+                        <a href="imageds/تصميم goldenn_.png" title="بطاقات اعمال" target="_blank">
+                            <div class="gallery-img">
+                                <img src="imageds/تصميم goldenn_.png" alt="بطاقة أعمال" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="p-5 gallery-caption" data-key="card6Description">
+                            <i class='bx bxs-calendar text-green-400 mr-1'></i>
+                            تصميم منتجات اطفال بمناسبة شهر ابريل
+                        </div>
+                    </div>
+
+                    <div class="gallery-card glassmorphism">
+                        <span class="float-label" data-key="card7Tag"><i class='bx bxs-car'></i> سيارات</span>
+                        <a href="imageds/car.png" title="انفوجرافيك" target="_blank">
+                            <div class="gallery-img">
+                                <img src="imageds/car.png" alt="انفوجرافيك" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="p-5 gallery-caption" data-key="card7Description">
+                            <i class='bx bxs-key text-green-400 mr-1'></i>
+                            تصميم سوشل ميديا لايجار السيارات وبيعهم
+                        </div>
+                    </div>
+
+                    <div class="gallery-card glassmorphism">
+                        <span class="float-label" data-key="card8Tag"><i class='bx bxs-cookie'></i> حلويات</span>
+                        <a href="imageds/chocolate design product.png" title="موشن و فيديو قصير" target="_blank">
+                            <div class="gallery-img">
+                                <img src="imageds/chocolate design product.png" alt="تصميم فيديو أو موشن" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="p-5 gallery-caption" data-key="card8Description">
+                            <i class='bx bxs-cake text-green-400 mr-1'></i>
+                            تصميم سوشل ميديا اعلاني لبراند شكلاطه
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="py-8 bg-gray-900">
+           <div class="flex justify-center mb-4">
+                 <div class="icon-container">
+                    <a href="https://www.facebook.com/profile.php?id=61576873267996" class="glassmorphism w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-all hover-scale">
+                                <i class="bx bxl-facebook text-xl"></i>
+                            </a>
+                </div>
+                <div class="icon-container">
+                    <a href="https://x.com/abdelmounimZa" class="glassmorphism w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-green-400 transition-all hover-scale">
+                                <i class="bx bxl-twitter text-xl"></i>
+                            </a>
+                </div>
+                <div class="icon-container">
+                     <a href="https://www.instagram.com/i.az_design/" class="glassmorphism w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-all hover-scale">
+                                <i class="bx bxl-instagram text-xl"></i>
+                            </a>
+                </div>
+                <div class="icon-container">
+                    <a href="https://www.linkedin.com/in/abdelmounim-zahri-098b8832b/" class="glassmorphism w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-green-800 transition-all hover-scale">
+                                <i class="bx bxl-linkedin text-xl"></i>
+                            </a>
+                </div>
+            </div>
+            <p class="text-gray-400" data-key="footerText">© 2023 Abdelmounim Zahri. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <button id="language-fab" class="language-fab">
+        English
+    </button>
+    <script>
+        const translations = {
+            ar: {
+                pageTitle: "معرض الأعمال | Abdelmounim Zahri",
+                brandName: "Abdelmounim Zahri",
+                navHome: "الرئيسية",
+                navServices: "الخدمات",
+                navPortfolio: "معرض الأعمال",
+                navAbout: "من أنا",
+                navContact: "اتصل بنا",
+                portfolioTitleMain: "معرض الأعمال",
+                portfolioTitle: "معرض الأعمال",
+                portfolioDescriptionMain: "مجموعة مختارة من أعمالي التي تجمع بين الإبداع والدقة، تجدون هنا نماذج من التصاميم التي أنجزتها في مختلف المجالات. انقر على أي صورة لمعاينتها بالحجم الكامل.",
+                card1Tag: "ابداع",
+                card1Description: "تصميم سوشل ميديا لاعلان لمحل قطع السيارات",
+                card2Tag: "رمضان",
+                card2Description: "تصميم سوشل ميديا بطابع فطور رمضاني",
+                card3Tag: "طعام",
+                card3Description: "تصميم اعلان عطر سوشل ميديا",
+                card4Tag: "عطور",
+                card4Description: "تصميم سوشل ميديا لعطر رجالي بطابع احمر",
+                card5Tag: "أمن",
+                card5Description: "تصميم بوست دورة للأمن السيبيراني",
+                card6Tag: "اطفال",
+                card6Description: "تصميم منتجات اطفال بمناسبة شهر ابريل",
+                card7Tag: "سيارات",
+                card7Description: "تصميم سوشل ميديا لايجار السيارات وبيعهم",
+                card8Tag: "حلويات",
+                card8Description: "تصميم سوشل ميديا اعلاني لبراند شكلاطه",
+                footerText: "© 2023 Abdelmounim Zahri. جميع الحقوق محفوظة."
+            },
+            en: {
+                pageTitle: "Portfolio | Abdelmounim Zahri",
+                brandName: "Abdelmounim Zahri",
+                navHome: "Home",
+                navServices: "Services",
+                navPortfolio: "Portfolio",
+                navAbout: "About Me",
+                navContact: "Contact",
+                portfolioTitleMain: "Portfolio",
+                portfolioTitle: "Portfolio",
+                portfolioDescriptionMain: "A selection of my creative and precise work. Here you'll find examples of designs I've completed in various fields. Click any image to view it in full size.",
+                card1Tag: "Creative",
+                card1Description: "Social media design for a car parts shop advertisement.",
+                card2Tag: "Ramadan",
+                card2Description: "Social media design with a Ramadan breakfast theme.",
+                card3Tag: "Food",
+                card3Description: "Parfum social media design for.",
+                card4Tag: "Perfumes",
+                card4Description: "Social media design for a men's perfume with a red theme.",
+                card5Tag: "Security",
+                card5Description: "Cybersecurity course poster design.",
+                card6Tag: "Kids",
+                card6Description: "Kids' product design for April.",
+                card7Tag: "Cars",
+                card7Description: "Social media design for car rental and sales.",
+                card8Tag: "Sweets",
+                card8Description: "Social media advertisement design for a chocolate brand.",
+                footerText: "© 2023 Abdelmounim Zahri. All rights reserved."
+            }
+        };
+
+        let currentLanguage = localStorage.getItem('userLanguage') || 'ar';
+
+        function setLanguage(lang) {
+            localStorage.setItem('userLanguage', lang);
+            currentLanguage = lang;
+            const htmlTag = document.documentElement;
+            htmlTag.setAttribute('lang', lang);
+            htmlTag.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            // Update title
+            document.querySelector('title').textContent = translations[lang]['pageTitle'];
+
+            // Update text content based on the current language
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) { // Added check for translations[lang] existence
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update direction for elements that specifically need it (like paragraph with dir)
+            const portfolioDesc = document.querySelector('[data-key="portfolioDescriptionMain"]');
+            if (portfolioDesc) {
+                portfolioDesc.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            }
+
+            // Update language FAB text
+            const languageFab = document.getElementById('language-fab');
+            if (languageFab) {
+                languageFab.textContent = lang === 'ar' ? 'English' : 'العربية';
+                // The position (right: 20px) is handled by CSS, so no JS manipulation needed here.
+            }
+            
+            const toggleButtonMobile = document.getElementById('language-toggle-mobile');
+            if (toggleButtonMobile) {
+                toggleButtonMobile.textContent = lang === 'ar' ? 'English' : 'العربية';
+            }
+
+            // Adjust `float-label` positioning for LTR/RTL
+            document.querySelectorAll('.float-label').forEach(label => {
+                if (lang === 'ar') {
+                    label.style.right = '8px'; // 8px من اليمين في العربية (RTL)
+                    label.style.left = 'auto'; // إزالة الخاصية left
+                } else {
+                    label.style.left = '8px'; // 8px من اليسار في الإنجليزية (LTR)
+                    label.style.right = 'auto'; // إزالة الخاصية right
+                }
+            });
+
+            // Adjust alignment of the grid for LTR/RTL
+            const galleryGrid = document.querySelector('.grid');
+            if (galleryGrid) {
+                galleryGrid.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            }
+        }
+
+        // Hamburger menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (menu.style.left === '0px') {
+                menu.style.left = '-100%';
+                hamburger.classList.remove('active');
+            } else {
+                menu.style.left = '0px';
+                hamburger.classList.add('active');
+            }
+        }
+
+        // Close mobile menu when clicking on a link or language button
+        document.querySelectorAll('.mobile-nav-link, #language-toggle-mobile').forEach(element => {
+            element.addEventListener('click', () => {
+                document.getElementById('mobileMenu').style.left = '-100%';
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Event listener for the Floating Language Button
+        const languageFabButton = document.getElementById('language-fab');
+        if (languageFabButton) {
+            languageFabButton.addEventListener('click', () => {
+                const newLang = currentLanguage === 'ar' ? 'en' : 'ar';
+                setLanguage(newLang);
+            });
+        }
+
+        const languageToggleButtonMobile = document.getElementById('language-toggle-mobile');
+        if (languageToggleButtonMobile) {
+            languageToggleButtonMobile.addEventListener('click', () => {
+                const newLang = currentLanguage === 'ar' ? 'en' : 'ar';
+                setLanguage(newLang);
+            });
+        }
+
+        // Set initial language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLanguage); // Sets Arabic as default on load
+        });
+    </script>
+</body>
+</html>
